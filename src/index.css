@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@200;300;500;600;700;800;900&family=Raleway:wght@500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+/* fetured-img img setting fixd css code */
+.fetured-img {
+  background-image: url(/src/assets/home/featured.jpg);
+}
+
+/* bistro boos center hank img */
+.bistro-main-center-img {
+  background-image: url(/src/assets/home/chef-service.jpg);
+  background-position: center;
+  background-size: cover;
+}
+
+/* .react-tabs__tab--selected {
+  background: #fff;
+  border-color: #aaa;
+  color: #bb8506;
+  border-radius: 5px 5px 0 0;
+} */
