@@ -1,22 +1,23 @@
-import { useContext } from "react";
-import { AuthContext } from "../provider/AuthProvider";
 import { Navigate, useLocation } from "react-router-dom";
+import useAdmin from "../Hooks/useAdmin";
+import useAuth from "../Hooks/useAuth";
 
-const PrivateRoute = ({ children }) => {
-  const { user, loading } = useContext(AuthContext);
+const AdminRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+  const [isAdmin, isAdminLoading] = useAdmin();
   const location = useLocation();
 
-  if (loading) {
+  if (loading || isAdminLoading) {
     return (
       <div className="w-24 mx-auto mt-72">
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
   }
-  if (user) {
+  if (user && isAdmin) {
     return children;
   }
   return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
 };
 
-export default PrivateRoute;
+export default AdminRoute;

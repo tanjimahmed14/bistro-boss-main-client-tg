@@ -1,13 +1,20 @@
-import { FaCalendarAlt, FaHome, FaList, FaShoppingCart, FaUsers, FaUtensils } from "react-icons/fa";
-
+import {
+  FaCalendarAlt,
+  FaHome,
+  FaList,
+  FaShoppingCart,
+  FaUsers,
+  FaUtensils,
+} from "react-icons/fa";
 
 import { VscPreview } from "react-icons/vsc";
 import { FaBook, FaBookMedical } from "react-icons/fa6";
 import { NavLink, Outlet } from "react-router-dom";
 import useCart from "../Hooks/useCart";
+import useAdmin from "../Hooks/useAdmin";
 
 const Dashbord = () => {
-  const isAdmit = true;
+  const [isAdmit] = useAdmin();
   const [cart] = useCart();
   return (
     <div className="flex">
@@ -15,37 +22,36 @@ const Dashbord = () => {
         <ul className="menu uppercase p-4 space-y-2">
           {isAdmit ? (
             <>
-            <li>
-            <NavLink to="/dashbord/home">
-              <FaHome></FaHome>
-              Admin Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashbord/reservation">
-            <FaUtensils />
-              add items
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashbord/paymentHistory">
-            <FaList></FaList>
-            manage items
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashbord/cart">
-            
-            <FaBook></FaBook>
-            Manage bookings
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashbord/users">
-              <FaUsers/>
-              all users
-            </NavLink>
-          </li>
+              <li>
+                <NavLink to="/dashbord/home">
+                  <FaHome></FaHome>
+                  Admin Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashbord/reservation">
+                  <FaUtensils />
+                  add items
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashbord/paymentHistory">
+                  <FaList></FaList>
+                  manage items
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashbord/cart">
+                  <FaBook></FaBook>
+                  Manage bookings
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashbord/users">
+                  <FaUsers />
+                  all users
+                </NavLink>
+              </li>
             </>
           ) : (
             <>
