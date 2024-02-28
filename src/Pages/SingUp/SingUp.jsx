@@ -1,7 +1,7 @@
 import authenticationImg from "../../assets/others/authentication2.png";
 import authenticationCover from "../../assets/others/authentication.png";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
@@ -10,6 +10,7 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const SingUp = () => {
   const axiosPublic = useAxiosPublic();
+  const [Fserror, setError] = useState("");
   const {
     register,
     handleSubmit,
@@ -21,37 +22,36 @@ const SingUp = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    console.log(data);
     crateuser(data.email, data.password)
       .then((result) => {
         const user = result.user;
         console.log(user);
         userPhotoUrlUpdate(data.name, data.photoURL)
-        .then(() => {
-          // create user database 
-          const userInfo = {
-            name: data.name,
-            email: data.email,
-          }
-          axiosPublic.post('/users', userInfo)
-          .then(res => {
-            if(res.data.insertedId){
-              console.log('user added to database', res.data)
-              reset()
-              Swal.fire({
-                title: "Logined!",
-                text: "User created successfully",
-                icon: "success",
-              });
-              navigate('/')
-            }
-          })          
-        })
-        .catch(() => {
-          console.log('not uthorize')
-        })
+          .then(() => {
+            // create user database
+            const userInfo = {
+              name: data.name,
+              email: data.email,
+            };
+            axiosPublic.post("/users", userInfo).then((res) => {
+              if (res.data.insertedId) {
+                console.log("user added to database", res.data);
+                reset();
+                Swal.fire({
+                  title: "Logined!",
+                  text: "User created successfully",
+                  icon: "success",
+                });
+                navigate("/");
+              }
+            });
+          })
+          .catch(() => {
+            console.log("not uthorize");
+          });
       })
       .catch((error) => {
+        setError("Already this email is use, Please provide your valid email");
         console.log(error);
       });
   };
@@ -59,7 +59,8 @@ const SingUp = () => {
   return (
     <div
       style={{ backgroundImage: `url(${authenticationCover})` }}
-      className="md:py-14">
+      className="md:py-14"
+    >
       <Helmet>
         <title>Bistro Boss | Sing Up</title>
       </Helmet>
@@ -78,7 +79,9 @@ const SingUp = () => {
               </h1>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text text-[#444] text-base">Name</span>
+                  <span className="label-text text-[#444] text-base">
+                    Name*
+                  </span>
                 </label>
                 <input
                   name="name"
@@ -96,14 +99,14 @@ const SingUp = () => {
               <div className="form-control">
                 <label className="label">
                   <span className="label-text text-[#444] text-base">
-                    Photo URL
+                    Photo URL(optional)
                   </span>
                 </label>
                 <input
                   name="photoURL"
                   type="text"
-                  {...register("photoURL", { required: true })}
-                  placeholder="Type here your name"
+                  {...register("photoURL")}
+                  placeholder="Type here your photoURL"
                   className="px-3 py-3 w-12/12 outline-none"
                 />
                 {errors.photoURL && (
@@ -115,7 +118,7 @@ const SingUp = () => {
               <div className="form-control">
                 <label className="label">
                   <span className="label-text text-[#444] text-base">
-                    Email
+                    Email*
                   </span>
                 </label>
                 <input
@@ -134,12 +137,12 @@ const SingUp = () => {
               <div className="form-control">
                 <label className="label">
                   <span className="label-text text-[#444] text-base">
-                    Password
+                    Password*
                   </span>
                 </label>
                 <input
                   name="password"
-                  type="text"
+                  type="password"
                   {...register("password", {
                     required: true,
                     minLength: 6,
@@ -179,6 +182,7 @@ const SingUp = () => {
                   value="Sing Up"
                 />
               </div>
+              <p className="text-red-600 text-sm">{Fserror}</p>
               <p className="text-[#D1A054] font-bold text-center">
                 <small>
                   Already registered?

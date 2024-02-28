@@ -13,7 +13,7 @@ const Testimonials = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/review")
+    fetch("https://bistro-boss-server-liard-six.vercel.app/review")
       .then((res) => res.json())
       .then((data) => setReviews(data));
   }, []);
@@ -36,8 +36,12 @@ const Testimonials = () => {
                       readOnly
                     />
                     <FaQuoteLeft className="text-6xl"></FaQuoteLeft>
-                    <p className="text-[#444] text-sm font-inter font-light">{review.details}</p>
-                    <h1 className="text-[#CD9003] text-xl font-inter uppercase font-normal">{review.name}</h1>
+                    <p className="text-[#444] text-sm font-inter font-light">
+                      {review.details}
+                    </p>
+                    <h1 className="text-[#CD9003] text-xl font-inter uppercase font-normal">
+                      {review.name}
+                    </h1>
                   </div>
                 </SwiperSlide>
               ))}

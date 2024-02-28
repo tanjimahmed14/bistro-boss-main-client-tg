@@ -9,10 +9,10 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 
 const OurShop = () => {
-    const categoryes = ['salad','pizza', 'soup', 'dessert', 'drinks' ]
-    const {category} = useParams()
-    const intialIndex = categoryes.indexOf(category)
-  const [tabIndex, setTebIndex] = useState(intialIndex)
+  const categoryes = ["salad", "pizza", "soup", "dessert", "drinks"];
+  const { category } = useParams();
+  const intialIndex = categoryes.indexOf(category);
+  const [tabIndex, setTebIndex] = useState(intialIndex);
   const [menu] = useMenu();
   const drinks = menu.filter((item) => item.category === "drinks");
   const dessert = menu.filter((item) => item.category === "dessert");
@@ -30,33 +30,36 @@ const OurShop = () => {
           title={"OUR SHOP"}
           subTitle={"Would you like to try a dish?"}
         ></Cover>
-        <div className="max-w-6xl mx-auto">
-          <Tabs defaultIndex={tabIndex} onSelect={(index) => setTebIndex(index)}>
+        <div className="max-w-6xl mx-auto mt-5   mb-10">
+          <Tabs
+            defaultIndex={tabIndex}
+            onSelect={(index) => setTebIndex(index)}
+          >
             <div className="text-center">
-            <TabList>
-              <Tab>Salad</Tab>
-              <Tab>pizza</Tab>
-              <Tab>soups</Tab>
-              <Tab>desserts</Tab>
-              <Tab>drinks</Tab>
-            </TabList>
+              <TabList>
+                <Tab>Salad</Tab>
+                <Tab>Pizza</Tab>
+                <Tab>Soups</Tab>
+                <Tab>Desserts</Tab>
+                <Tab>Drinks</Tab>
+              </TabList>
             </div>
             <div className="mt-10">
-            <TabPanel>
+              <TabPanel>
                 <Ourcart item={salad}></Ourcart>
-            </TabPanel>
-            <TabPanel>
-            <Ourcart item={pizza}></Ourcart>
-            </TabPanel>
-            <TabPanel>
-            <Ourcart item={soup}></Ourcart>
-            </TabPanel>
-            <TabPanel>
-            <Ourcart item={dessert}></Ourcart>
-            </TabPanel>
-            <TabPanel>
-              <Ourcart item={drinks}></Ourcart>
-            </TabPanel>
+              </TabPanel>
+              <TabPanel>
+                <Ourcart item={pizza}></Ourcart>
+              </TabPanel>
+              <TabPanel>
+                <Ourcart item={soup}></Ourcart>
+              </TabPanel>
+              <TabPanel>
+                <Ourcart item={dessert}></Ourcart>
+              </TabPanel>
+              <TabPanel>
+                <Ourcart item={drinks}></Ourcart>
+              </TabPanel>
             </div>
           </Tabs>
         </div>

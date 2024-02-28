@@ -1,11 +1,13 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../provider/AuthProvider";
 import { TiShoppingCart } from "react-icons/ti";
 import useCart from "../../../Hooks/useCart";
+import useAdmin from "../../../Hooks/useAdmin";
 
 const Navber = () => {
   const { logOut, user } = useContext(AuthContext);
+  const [isAdmin] = useAdmin();
   const [cart] = useCart();
   console.log(cart.length);
 
@@ -21,27 +23,46 @@ const Navber = () => {
 
   const navInfo = (
     <>
+      <li className="">
+        <NavLink className="mr-2" to="/">
+          Home
+        </NavLink>
+      </li>
+      {user && isAdmin && (
+        <li>
+          <NavLink className="nav-link mr-2" to="/dashbord/adminHome">
+            Dashbord
+          </NavLink>
+        </li>
+      )}
+      {/* {user && !isAdmin && (
+        <li><NavLink className="nav-link mr-2" to="/dashbord/userHome">
+        Dashbord
+      </NavLink></li>
+      )} */}
       <li>
-        <Link to="/">Home</Link>
+        <NavLink className="nav-link mr-2" to="/menu">
+          Our Menu
+        </NavLink>
+      </li>
+      {/* <li>
+        <NavLink className="nav-link mr-2" to="/sicrate">Sicrate</NavLink>
+      </li> */}
+      
+      <li>
+        <NavLink className="nav-link mr-2" to="/shop/salad">
+          Our Shop
+        </NavLink>
       </li>
       <li>
-        <Link to="/menu">Our Menu</Link>
-      </li>
-      <li>
-        <Link to="/sicrate">Sicrate</Link>
-      </li>
-      <li>
-        <Link to="/shop/salad">Our Shop</Link>
-      </li>
-      <li>
-        <Link to="/dashbord/cart">
+        <NavLink className="nav-link mr-2 " to="/dashbord/cart">
           <div className="indicator">
             <TiShoppingCart className="text-3xl"></TiShoppingCart>
             <span className="badge badge-sm indicator-item py-2">
               +{cart.length}
             </span>
           </div>
-        </Link>{" "}
+        </NavLink>{" "}
       </li>
 
       {user ? (
@@ -60,7 +81,7 @@ const Navber = () => {
     </>
   );
   return (
-    <div className="navbar fixed z-10 bg-[#15151580] text-white bg-opacity-30 max-w-screen-2xl">
+    <div className="navbar fixed z-10 bg-white shadow-2xl text-black  max-w-screen-2xl px-5">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -81,20 +102,22 @@ const Navber = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu items-center menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu items-center text-[#BB8506] menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             {navInfo}
           </ul>
         </div>
         <a className="text-3xl font-cinizel">
           BISTRO BOSS <br />
-          <span className="font-cinizel text-xl uppercase">
+          <span className="font-cinizel text-xl uppercase text-[#BB8506]">
             R e s t a u r a n t
           </span>{" "}
         </a>
       </div>
       <div className="navbar-end hidden lg:flex">
-        <ul className="menu items-center menu-horizontal px-1">{navInfo}</ul>
+        <ul className="menu text-[#BB8506] items-center menu-horizontal px-1 text-[15px]">
+          {navInfo}
+        </ul>
       </div>
     </div>
   );

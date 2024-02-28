@@ -1,18 +1,16 @@
 import { FaTrashAlt } from "react-icons/fa";
-import useCart from "../../../Hooks/useCart";
+import useMenu from "../../../Hooks/useMenu";
 import SectionTitle from "../../Shared/SectionTitle/SectionTitle";
+import { FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 
-const MyCart = () => {
-  const [cart, refetch] = useCart();
+const MenageItems = () => {
+  const [menu, , refetch] = useMenu();
   const axiosSecure = useAxiosSecure();
-  const totalPrice = cart.reduce((total, item) => total + item.price, 0);
 
-  //   delete section
-  const hendelDelete = (id) => {
+  const hendelItemDelete = (item) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -21,49 +19,39 @@ const MyCart = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/carts/${id}`).then((res) => {
-          if (res.data.deletedCount > 0) {
-            refetch();
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-            });
-          }
-        });
+        const res = await axiosSecure.delete(`/menu/${item._id}`);
+        // console.log(res.data);
+        if (res.data.deletedCount > 0) {
+          // refetch update the ui
+          refetch();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${item.name} has been deleted`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
       }
     });
   };
   return (
     <div>
-      <Helmet>
-        <title>Bistro Boss | Cart</title>
-      </Helmet>
       <SectionTitle
-        subHeading={"My Cart"}
-        heading={"WANNA ADD MORE?"}
+        heading="MANAGE ITEMS"
+        subHeading="Hurry Up!"
       ></SectionTitle>
-
-      <div className="flex justify-around mb-8">
-        <h1 className="text-2xl">
-          Total orders: <span className="font-bold">{cart.length}</span>
-        </h1>
-        <h1 className="text-2xl">
-          Total price: $<span className="font-bold">{totalPrice}</span>
-        </h1>
-        {cart.length ? (
-          <Link to="/dashbord/payment">
-            <button className="btn btn-primary">Pay</button>
-          </Link>
-        ) : (
-          <button disabled className="btn btn-primary">
-            Pay
-          </button>
-        )}
-      </div>
       <div>
+        <div className="flex justify-center mb-8">
+          <h1 className="text-2xl font-cinizel">
+            Total users:{" "}
+            <span className="font-bold font-inter"> {menu.length}</span>
+          </h1>
+        </div>
+      </div>
+      <div className="">
         <div className="overflow-x-auto mb-10">
           <table className="table lg:max-w-5xl  mx-auto bg-[#F6F6F6]">
             {/* head */}
@@ -73,11 +61,12 @@ const MyCart = () => {
                 <th>Image</th>
                 <th>Name</th>
                 <th>Price</th>
+                <th>UPDATE</th>
                 <th>ACTION</th>
               </tr>
             </thead>
             <tbody>
-              {cart.map((item, index) => (
+              {menu.map((item, index) => (
                 <tr key={item._id}>
                   <th>{index + 1}</th>
                   <td>
@@ -95,8 +84,15 @@ const MyCart = () => {
                   <td>{item.name}</td>
                   <td>$ {item.price}</td>
                   <th>
+                    <Link to={`/dashbord/updateItem/${item._id}`}>
+                      <button className="btn btn-ghost btn-lg bg-[#D1A054] hover:bg-[#eb9b23] text-white">
+                        <FaEdit className="text-xl px-0"></FaEdit>
+                      </button>
+                    </Link>
+                  </th>
+                  <th>
                     <button
-                      onClick={() => hendelDelete(item._id)}
+                      onClick={() => hendelItemDelete(item)}
                       className="btn btn-ghost btn-lg text-red-700"
                     >
                       <FaTrashAlt></FaTrashAlt>
@@ -113,4 +109,4 @@ const MyCart = () => {
   );
 };
 
-export default MyCart;
+export default MenageItems;

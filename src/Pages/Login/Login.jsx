@@ -15,6 +15,7 @@ import SocialLogInGoogle from "./SocialLogInGoogle";
 const Login = () => {
   const [disabled, setDisable] = useState(true);
   const { logIn } = useContext(AuthContext);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -39,12 +40,13 @@ const Login = () => {
         navigate(from, { replace: true });
       })
       .catch((error) => {
+        setError("Provide your valid email and password");
         console.error(error);
       });
   };
 
   useEffect(() => {
-    loadCaptchaEnginge(0);
+    loadCaptchaEnginge(6);
   }, []);
 
   const handelvalidatecaptcha = (e) => {
@@ -87,7 +89,7 @@ const Login = () => {
                 <input
                   name="email"
                   type="email"
-                  placeholder="Type here"
+                  placeholder="Enter your email"
                   className="px-3 py-3 w-12/12 outline-none"
                   required
                 />
@@ -100,7 +102,7 @@ const Login = () => {
                 </label>
                 <input
                   name="password"
-                  type="text"
+                  type="password"
                   placeholder="Enter your password"
                   className="px-3 py-3 w-12/12 outline-none"
                   required
@@ -126,6 +128,7 @@ const Login = () => {
                   value="Login"
                 />
               </div>
+              <p className="text-red-600 text-sm">{error}</p>
               <p className="text-[#D1A054] font-bold text-center">
                 <small>
                   New here?{" "}

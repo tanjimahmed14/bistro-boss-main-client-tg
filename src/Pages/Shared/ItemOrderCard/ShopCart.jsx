@@ -69,7 +69,12 @@ const ShopCart = ({ item }) => {
         <h2 className="text-2xl text-[#151515] font-inter font-bold">{name}</h2>
         <p className="text-[#737373] text-xs font-light">{recipe}</p>
         <div className="card-actions justify-center">
-          <button onClick={handelClickCart}className="px-4 font-inter py-2 rounded-xl bg-[#E8E8E8] border-b-2 border-[#BB8506] text-[#BB8506] text-base hover:bg-[#111827]">ADD TO CART</button>
+          <button
+            onClick={handelClickCart}
+            className="px-4 font-inter py-2 rounded-xl bg-[#E8E8E8] border-b-2 border-[#BB8506] text-[#BB8506] text-base hover:duration-1000 hover:bg-[#111827]"
+          >
+            ADD TO CART
+          </button>
         </div>
       </div>
     </div>

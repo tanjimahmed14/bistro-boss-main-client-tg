@@ -7,8 +7,7 @@ import {
   FaUtensils,
 } from "react-icons/fa";
 
-import { VscPreview } from "react-icons/vsc";
-import { FaBook, FaBookMedical } from "react-icons/fa6";
+import { FaBook } from "react-icons/fa6";
 import { NavLink, Outlet } from "react-router-dom";
 import useCart from "../Hooks/useCart";
 import useAdmin from "../Hooks/useAdmin";
@@ -23,19 +22,19 @@ const Dashbord = () => {
           {isAdmit ? (
             <>
               <li>
-                <NavLink to="/dashbord/home">
+                <NavLink to="/dashbord/adminHome">
                   <FaHome></FaHome>
                   Admin Home
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashbord/reservation">
+                <NavLink to="/dashbord/addItems">
                   <FaUtensils />
                   add items
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashbord/paymentHistory">
+                <NavLink to="/dashbord/manageItems">
                   <FaList></FaList>
                   manage items
                 </NavLink>
@@ -43,7 +42,7 @@ const Dashbord = () => {
               <li>
                 <NavLink to="/dashbord/cart">
                   <FaBook></FaBook>
-                  Manage bookings
+                  Manage bookings ( {cart.length} )
                 </NavLink>
               </li>
               <li>
@@ -52,19 +51,31 @@ const Dashbord = () => {
                   all users
                 </NavLink>
               </li>
+              <li>
+                <NavLink to="/dashbord/paymentHistory">
+                  <FaCalendarAlt></FaCalendarAlt>
+                  payment history
+                </NavLink>
+              </li>
             </>
           ) : (
             <>
-              <li>
-                <NavLink to="/dashbord/home">
+              {/* <li>
+                <NavLink to="/dashbord/userHome">
                   <FaHome></FaHome>
                   User Home
                 </NavLink>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <NavLink to="/dashbord/reservation">
                   <FaCalendarAlt></FaCalendarAlt>
                   reservation
+                </NavLink>
+              </li> */}
+              <li>
+                <NavLink to="/dashbord/cart">
+                  <FaShoppingCart></FaShoppingCart>
+                  My Cart ( {cart.length} )
                 </NavLink>
               </li>
               <li>
@@ -73,24 +84,19 @@ const Dashbord = () => {
                   payment history
                 </NavLink>
               </li>
-              <li>
-                <NavLink to="/dashbord/cart">
-                  <FaShoppingCart></FaShoppingCart>
-                  My Cart ( {cart.length} )
-                </NavLink>
-              </li>
-              <li>
+
+              {/* <li>
                 <NavLink to="/dashbord/review">
                   <VscPreview></VscPreview>
                   add review
                 </NavLink>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <NavLink to="/dashbord/booking">
                   <FaBookMedical></FaBookMedical>
                   my booking
                 </NavLink>
-              </li>
+              </li> */}
             </>
           )}
           <div className="divider"></div>
